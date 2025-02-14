@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Broken Link Scanner</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-image"></div>
+        <div class="hero-content">
+            <h1>Broken Link Scanner</h1>
+            <p>Scan your website for broken links with ease.</p>
+            <input type="text" id="urlInput" placeholder="Enter URL">
+            <button id="scanButton">Scan</button>
+            <div id="scanningAnimation" class="hidden">Scanning...</div>
+            <div id="scanningAnimation2" class="hidden">This might take a few minutes</div>
+            <div id="progressBar" class="hidden">
+                <div id="progress" style="width: 0%;"></div>
+            </div>
+            <div id="results" class="hidden">
+                <h2>Broken Links:</h2>
+                <ul id="brokenLinks"></ul>
+            </div>
+        </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

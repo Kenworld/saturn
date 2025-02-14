@@ -1,0 +1,139 @@
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #121212;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    perspective: 1px;
+    perspective-origin: 0 0;
+}
+
+.hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('saturn.jpg');
+    background-size: cover;
+    background-position: center;
+
+    opacity: 0.6;
+}
+
+.hero-content {
+    position: relative;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+input {
+    padding: 15px;
+    margin: 10px 0;
+    width: 80%;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #ffffff;
+    font-size: 1em;
+}
+
+button {
+    padding: 15px 30px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.hidden {
+    display: none;
+}
+
+#scanningAnimation {
+    font-size: 1.5em;
+    margin-top: 20px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+#results {
+    margin-top: 20px;
+}
+
+#brokenLinks {
+    list-style-type: none;
+    padding: 0;
+}
+
+#brokenLinks li {
+    background-color: #ff4d4d;
+    margin: 5px 0;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 1em;
+}
+#progressBar {
+    width: 100%;
+    background-color: #333;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+#progress {
+    height: 20px;
+    background-color: #007BFF;
+    width: 0%;
+    transition: width 0.3s;
+}
+
+#brokenLinks li {
+    background-color: #ff4d4d;
+    margin: 5px 0;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 1em;
+    list-style-type: none;
+}
+
+#brokenLinks li strong {
+    font-weight: bold;
+}
