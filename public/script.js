@@ -32,6 +32,14 @@ document.getElementById('scanButton').addEventListener('click', async () => {
     }
 });
 
+document.getElementById('exportCsvButton').addEventListener('click', () => {
+    window.location.href = '/export/csv';
+});
+
+document.getElementById('exportJsonButton').addEventListener('click', () => {
+    window.location.href = '/export/json';
+});
+
 socket.on('progress', (data) => {
     document.getElementById('progress').style.width = `${data.progress}%`;
 });

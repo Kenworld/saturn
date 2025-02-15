@@ -7,7 +7,7 @@ body {
     margin: 0;
     background-color: #121212;
     color: #ffffff;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 .hero {
@@ -15,8 +15,6 @@ body {
     width: 100%;
     height: 100vh;
     overflow: hidden;
-    perspective: 1px;
-    perspective-origin: 0 0;
 }
 
 .hero-image {
@@ -28,7 +26,7 @@ body {
     background-image: url('saturn.jpg');
     background-size: cover;
     background-position: center;
-
+    transform: translateZ(-1px) scale(2);
     opacity: 0.6;
 }
 
@@ -40,6 +38,8 @@ body {
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     z-index: 1;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
 h1 {
@@ -110,6 +110,11 @@ button:hover {
     border-radius: 5px;
     font-size: 1em;
 }
+
+#brokenLinks li strong {
+    font-weight: bold;
+}
+
 #progressBar {
     width: 100%;
     background-color: #333;
@@ -125,15 +130,18 @@ button:hover {
     transition: width 0.3s;
 }
 
-#brokenLinks li {
-    background-color: #ff4d4d;
-    margin: 5px 0;
-    padding: 15px;
+#exportCsvButton, #exportJsonButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
     border-radius: 5px;
+    cursor: pointer;
     font-size: 1em;
-    list-style-type: none;
+    transition: background-color 0.3s;
 }
 
-#brokenLinks li strong {
-    font-weight: bold;
+#exportCsvButton:hover, #exportJsonButton:hover {
+    background-color: #218838;
 }

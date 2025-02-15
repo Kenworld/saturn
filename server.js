@@ -1,6 +1,9 @@
 const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
+const fs = require('fs');
+const path = require('path');
+const { Parser } = require('json2csv');
 const app = express();
 const port = 3000;
 const { Server } = require('socket.io');
@@ -11,6 +14,8 @@ const io = new Server(server);
 
 app.use(express.static('public'));
 app.use(express.json());
+
+let scanResults = [];
 
 app.post('/scan', async (req, res) => {
     const { url } = req.body;
@@ -26,12 +31,26 @@ app.post('/scan', async (req, res) => {
             }
         });
 
-        const brokenLinks = await checkLinks(links, url, io);
-        res.json({ brokenLinks });
+        scanResults = await checkLinks(links, url, io);
+        res.json({ brokenLinks: scanResults });
     } catch (error) {
         console.error('Error scanning the website:', error);
         res.status(500).json({ error: 'Error scanning the website' });
     }
+});
+
+app.get('/export/csv', (req, res) => {
+    const json2csvParser = new Parser();
+    const csv = json2csvParser.parse(scanResults);
+    res.header('Content-Type', 'text/csv');
+    res.attachment('scan_results.csv');
+    return res.send(csv);
+});
+
+app.get('/export/json', (req, res) => {
+    res.header('Content-Type', 'application/json');
+    res.attachment('scan_results.json');
+    return res.send(JSON.stringify(scanResults, null, 2));
 });
 
 async function checkLinks(links, baseUrl, io) {
