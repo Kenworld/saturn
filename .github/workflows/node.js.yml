@@ -1,0 +1,38 @@
+name: Node.js CI
+
+on:
+  push:
+    branches:
+      - main  # Change this to your default branch if it's not 'main'
+  pull_request:
+    branches:
+      - main  # Change this to your default branch if it's not 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]  # Specify the Node.js versions you want to test against
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run the project
+      run: node server.js &
+
+    - name: Wait for the server to start
+      run: sleep 10  # Adjust the sleep time if necessary to ensure the server starts
+
+    - name: Run tests (if any)
+      run: npm test  # If you have tests, you can run them here
