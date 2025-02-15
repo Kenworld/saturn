@@ -1,0 +1,19 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "server.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "server.js"
+      }
+    ],
+    "env": {
+      "PAGE_SPEED_API_KEY": "AIzaSyCsQNYN2aKv3qTJ77p0bTAk232B_b9fY18"
+    }
+  }
+  
