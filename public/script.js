@@ -21,7 +21,7 @@ document.getElementById('scanButton').addEventListener('click', async () => {
         if (data.error) {
             throw new Error(data.error);
         }
-        displayResults(data.brokenLinks);
+        displayResults(data.brokenLinks, data.seoRecommendations);
     } catch (error) {
         console.error('Error scanning the website:', error);
         alert('Error scanning the website: ' + error.message);
@@ -44,10 +44,12 @@ socket.on('progress', (data) => {
     document.getElementById('progress').style.width = `${data.progress}%`;
 });
 
-function displayResults(brokenLinks) {
+function displayResults(brokenLinks, seoRecommendations) {
     const results = document.getElementById('results');
     const brokenLinksList = document.getElementById('brokenLinks');
+    const seoRecommendationsList = document.getElementById('seoRecommendations');
     brokenLinksList.innerHTML = '';
+    seoRecommendationsList.innerHTML = '';
 
     if (brokenLinks && brokenLinks.length > 0) {
         brokenLinks.forEach(link => {
@@ -59,9 +61,22 @@ function displayResults(brokenLinks) {
             `;
             brokenLinksList.appendChild(li);
         });
-        results.classList.remove('hidden');
     } else {
-        results.innerHTML = '<p>No broken links found!</p>';
-        results.classList.remove('hidden');
+        brokenLinksList.innerHTML = '<p>No broken links found!</p>';
     }
+
+    if (seoRecommendations && seoRecommendations.length > 0) {
+        seoRecommendations.forEach(recommendation => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <strong>${recommendation.type}:</strong> ${recommendation.description}<br>
+                ${recommendation.details.length > 0 ? `<strong>Details:</strong> ${recommendation.details.map(detail => detail.text).join(', ')}` : ''}
+            `;
+            seoRecommendationsList.appendChild(li);
+        });
+    } else {
+        seoRecommendationsList.innerHTML = '<p>No SEO recommendations available.</p>';
+    }
+
+    results.classList.remove('hidden');
 }

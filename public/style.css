@@ -98,12 +98,12 @@ button:hover {
     margin-top: 20px;
 }
 
-#brokenLinks {
+#brokenLinks, #seoRecommendations {
     list-style-type: none;
     padding: 0;
 }
 
-#brokenLinks li {
+#brokenLinks li, #seoRecommendations li {
     background-color: #ff4d4d;
     margin: 5px 0;
     padding: 15px;
@@ -111,7 +111,7 @@ button:hover {
     font-size: 1em;
 }
 
-#brokenLinks li strong {
+#brokenLinks li strong, #seoRecommendations li strong {
     font-weight: bold;
 }
 

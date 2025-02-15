@@ -1,8 +1,6 @@
 const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
-const fs = require('fs');
-const path = require('path');
 const { Parser } = require('json2csv');
 const app = express();
 const port = 3000;
@@ -16,6 +14,7 @@ app.use(express.static('public'));
 app.use(express.json());
 
 let scanResults = [];
+const PAGE_SPEED_API_KEY = 'AIzaSyCsQNYN2aKv3qTJ77p0bTAk232B_b9fY18';
 
 app.post('/scan', async (req, res) => {
     const { url } = req.body;
@@ -32,7 +31,8 @@ app.post('/scan', async (req, res) => {
         });
 
         scanResults = await checkLinks(links, url, io);
-        res.json({ brokenLinks: scanResults });
+        const seoRecommendations = await getSEORecommendations(url);
+        res.json({ brokenLinks: scanResults, seoRecommendations });
     } catch (error) {
         console.error('Error scanning the website:', error);
         res.status(500).json({ error: 'Error scanning the website' });
@@ -82,6 +82,27 @@ async function checkLinks(links, baseUrl, io) {
         io.emit('progress', { progress });
     }
     return brokenLinks;
+}
+
+async function getSEORecommendations(url) {
+    const apiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&key=${PAGE_SPEED_API_KEY}`;
+    const response = await axios.get(apiUrl);
+    const data = response.data;
+    const recommendations = [];
+
+    if (data.lighthouseResult.audits) {
+        for (const [key, value] of Object.entries(data.lighthouseResult.audits)) {
+            if (value.score !== 1 && value.description) {
+                recommendations.push({
+                    type: key,
+                    description: value.description,
+                    details: value.details ? value.details.items : []
+                });
+            }
+        }
+    }
+
+    return recommendations;
 }
 
 io.on('connection', (socket) => {
